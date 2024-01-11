@@ -3,17 +3,17 @@ import Square from "../Square/Square";
 const Board = () => {
   return (
     <>
-      <div>
+      <div className="flex">
         <Square></Square>
         <Square></Square>
         <Square></Square>
       </div>
-      <div>
+      <div className="flex">
         <Square></Square>
         <Square></Square>
         <Square></Square>
       </div>
-      <div>
+      <div className="flex">
         <Square></Square>
         <Square></Square>
         <Square></Square>
