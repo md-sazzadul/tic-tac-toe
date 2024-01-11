@@ -1,5 +1,5 @@
-import Square from "./components/Square/Square";
+import Board from "./components/Board/Board";
 
 export default function App() {
-  return <Square></Square>;
+  return <Board></Board>;
 }
