@@ -1,5 +1,5 @@
-import Board from "./components/Board/Board";
+import Game from "./components/Game/Game";
 
 export default function App() {
-  return <Board></Board>;
+  return <Game></Game>;
 }
