@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calculateWinner } from "../../utils";
 import Board from "../Board/Board";
 
@@ -13,13 +13,26 @@ const Game = () => {
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
 
+  const [timeLeft, setTimeLeft] = useState(10);
+
   const currentSquares = history[currentMove];
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timerId);
+    } else {
+      setXIsNext(!xIsNext);
+      setTimeLeft(10);
+    }
+  }, [timeLeft, xIsNext]);
 
   function handlePlay(nextSquares) {
     setXIsNext(!xIsNext);
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+    setTimeLeft(10);
 
     const winnerInfo = calculateWinner(nextSquares);
     if (winnerInfo) {
@@ -83,6 +96,7 @@ const Game = () => {
           {playerO}: {scoreO}
         </div>
       </div>
+      <div>Time left: {timeLeft}s</div>
       <div className="flex justify-center">
         <div className="mr-16">
           <Board
