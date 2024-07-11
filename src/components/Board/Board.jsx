@@ -1,13 +1,13 @@
 import Square from "../Square/Square";
 
-const Board = ({ xIsNext, squares, onPlay }) => {
+const Board = ({ xIsNext, squares, onPlay, playerX, playerO }) => {
   const winner = calculateWinner(squares);
   let status;
 
   if (winner) {
-    status = `Winner: ${winner}`;
+    status = `Winner: ${winner === "X" ? playerX : playerO}`;
   } else {
-    status = "Next Player " + (xIsNext ? "X" : "O");
+    status = "Next Player " + (xIsNext ? playerX : playerO);
   }
 
   function handleClick(i) {

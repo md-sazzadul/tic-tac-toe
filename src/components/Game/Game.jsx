@@ -2,6 +2,8 @@ import { useState } from "react";
 import Board from "../Board/Board";
 
 const Game = () => {
+  const [playerX, setPlayerX] = useState("Player X");
+  const [playerO, setPlayerO] = useState("Player O");
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
@@ -35,26 +37,46 @@ const Game = () => {
   });
 
   return (
-    <div className="flex justify-center p-4">
-      <div className="mr-16">
-        <Board
-          xIsNext={xIsNext}
-          squares={currentSquares}
-          onPlay={handlePlay}
-        ></Board>
-        <button
-          className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
-          onClick={() => {
-            setHistory([Array(9).fill(null)]);
-            setCurrentMove(0);
-            setXIsNext(true);
-          }}
-        >
-          Reset Game
-        </button>
+    <div className="flex flex-col items-center p-4">
+      <div className="mb-4">
+        <input
+          type="text"
+          value={playerX}
+          onChange={(e) => setPlayerX(e.target.value)}
+          placeholder="Player X Name"
+          className="mr-2 p-1 border border-gray-400"
+        />
+        <input
+          type="text"
+          value={playerO}
+          onChange={(e) => setPlayerO(e.target.value)}
+          placeholder="Player O Name"
+          className="p-1 border border-gray-400"
+        />
       </div>
-      <div>
-        <ol className="border border-gray-400 p-1 text-lg">{moves}</ol>
+      <div className="flex justify-center">
+        <div className="mr-16">
+          <Board
+            xIsNext={xIsNext}
+            squares={currentSquares}
+            onPlay={handlePlay}
+            playerX={playerX}
+            playerO={playerO}
+          ></Board>
+          <button
+            className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
+            onClick={() => {
+              setHistory([Array(9).fill(null)]);
+              setCurrentMove(0);
+              setXIsNext(true);
+            }}
+          >
+            Reset Game
+          </button>
+        </div>
+        <div>
+          <ol className="border border-gray-400 p-1 text-lg">{moves}</ol>
+        </div>
       </div>
     </div>
   );
