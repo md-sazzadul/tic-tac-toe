@@ -50,6 +50,13 @@ const Game = () => {
     );
   });
 
+  function handleUndo() {
+    if (currentMove > 0) {
+      setCurrentMove(currentMove - 1);
+      setXIsNext(!xIsNext);
+    }
+  }
+
   return (
     <div className="flex flex-col items-center p-4">
       <div className="mb-4">
@@ -85,16 +92,24 @@ const Game = () => {
             playerX={playerX}
             playerO={playerO}
           ></Board>
-          <button
-            className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
-            onClick={() => {
-              setHistory([Array(9).fill(null)]);
-              setCurrentMove(0);
-              setXIsNext(true);
-            }}
-          >
-            Reset Game
-          </button>
+          <div className="mt-4">
+            <button
+              className="bg-red-500 text-white py-2 px-4 rounded mr-2"
+              onClick={() => {
+                setHistory([Array(9).fill(null)]);
+                setCurrentMove(0);
+                setXIsNext(true);
+              }}
+            >
+              Reset Game
+            </button>
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+              onClick={handleUndo}
+            >
+              Undo
+            </button>
+          </div>
         </div>
         <div>
           <ol className="border border-gray-400 p-1 text-lg">{moves}</ol>
