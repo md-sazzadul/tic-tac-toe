@@ -14,20 +14,27 @@ const Game = () => {
   const [currentMove, setCurrentMove] = useState(0);
 
   const [timeLeft, setTimeLeft] = useState(10);
+  const [gameFinished, setGameFinished] = useState(false);
 
   const currentSquares = history[currentMove];
 
   useEffect(() => {
-    if (timeLeft > 0) {
+    if (timeLeft > 0 && !gameFinished) {
       const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timerId);
-    } else {
-      setXIsNext(!xIsNext);
-      setTimeLeft(10);
+    } else if (timeLeft === 0 && !gameFinished) {
+      setGameFinished(true);
+      if (xIsNext) {
+        setScoreO(scoreO + 1);
+      } else {
+        setScoreX(scoreX + 1);
+      }
     }
-  }, [timeLeft, xIsNext]);
+  }, [timeLeft, xIsNext, gameFinished]);
 
   function handlePlay(nextSquares) {
+    if (gameFinished) return;
+
     setXIsNext(!xIsNext);
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
@@ -36,6 +43,7 @@ const Game = () => {
 
     const winnerInfo = calculateWinner(nextSquares);
     if (winnerInfo) {
+      setGameFinished(true);
       if (winnerInfo.winner === "X") {
         setScoreX(scoreX + 1);
       } else {
@@ -47,6 +55,8 @@ const Game = () => {
   function jumpTo(move) {
     setCurrentMove(move);
     setXIsNext(move % 2 === 0);
+    setTimeLeft(10);
+    setGameFinished(false);
   }
 
   const moves = history.map((squares, move) => {
@@ -67,7 +77,17 @@ const Game = () => {
     if (currentMove > 0) {
       setCurrentMove(currentMove - 1);
       setXIsNext(!xIsNext);
+      setTimeLeft(10);
+      setGameFinished(false);
     }
+  }
+
+  function resetGame() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+    setXIsNext(true);
+    setTimeLeft(10);
+    setGameFinished(false);
   }
 
   return (
@@ -109,11 +129,7 @@ const Game = () => {
           <div className="mt-4">
             <button
               className="bg-red-500 text-white py-2 px-4 rounded mr-2"
-              onClick={() => {
-                setHistory([Array(9).fill(null)]);
-                setCurrentMove(0);
-                setXIsNext(true);
-              }}
+              onClick={resetGame}
             >
               Reset Game
             </button>
