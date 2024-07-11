@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { calculateWinner } from "../../utils";
 import Board from "../Board/Board";
 
 const Game = () => {
   const [playerX, setPlayerX] = useState("Player X");
   const [playerO, setPlayerO] = useState("Player O");
+
+  const [scoreX, setScoreX] = useState(0);
+  const [scoreO, setScoreO] = useState(0);
+
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
@@ -15,6 +20,15 @@ const Game = () => {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+
+    const winnerInfo = calculateWinner(nextSquares);
+    if (winnerInfo) {
+      if (winnerInfo.winner === "X") {
+        setScoreX(scoreX + 1);
+      } else {
+        setScoreO(scoreO + 1);
+      }
+    }
   }
 
   function jumpTo(move) {
@@ -53,6 +67,14 @@ const Game = () => {
           placeholder="Player O Name"
           className="p-1 border border-gray-400"
         />
+      </div>
+      <div className="mb-4">
+        <div>
+          {playerX}: {scoreX}
+        </div>
+        <div>
+          {playerO}: {scoreO}
+        </div>
       </div>
       <div className="flex justify-center">
         <div className="mr-16">
