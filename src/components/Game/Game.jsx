@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Board from "../Board/Board";
 
 const Game = () => {
@@ -42,6 +42,16 @@ const Game = () => {
           squares={currentSquares}
           onPlay={handlePlay}
         ></Board>
+        <button
+          className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
+          onClick={() => {
+            setHistory([Array(9).fill(null)]);
+            setCurrentMove(0);
+            setXIsNext(true);
+          }}
+        >
+          Reset Game
+        </button>
       </div>
       <div>
         <ol className="border border-gray-400 p-1 text-lg">{moves}</ol>
