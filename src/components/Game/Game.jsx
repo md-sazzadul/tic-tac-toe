@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { calculateWinner } from "../../utils";
 import Board from "../Board/Board";
 
@@ -13,7 +13,7 @@ const Game = () => {
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
 
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(59);
   const [gameFinished, setGameFinished] = useState(false);
 
   const currentSquares = history[currentMove];
@@ -30,41 +30,44 @@ const Game = () => {
         setScoreX(scoreX + 1);
       }
     }
-  }, [timeLeft, xIsNext, gameFinished]);
+  }, [timeLeft, xIsNext, gameFinished, scoreO, scoreX]);
 
-  function handlePlay(nextSquares) {
-    if (gameFinished) return;
+  const handlePlay = useCallback(
+    (nextSquares) => {
+      if (gameFinished) return;
 
-    setXIsNext(!xIsNext);
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
-    setTimeLeft(10);
+      setXIsNext(!xIsNext);
+      const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+      setHistory(nextHistory);
+      setCurrentMove(nextHistory.length - 1);
+      setTimeLeft(59);
 
-    const winnerInfo = calculateWinner(nextSquares);
-    if (winnerInfo) {
-      setGameFinished(true);
-      if (winnerInfo.winner === "X") {
-        setScoreX(scoreX + 1);
-      } else {
-        setScoreO(scoreO + 1);
+      const winnerInfo = calculateWinner(nextSquares);
+      if (winnerInfo) {
+        setGameFinished(true);
+        if (winnerInfo.winner === "X") {
+          setScoreX(scoreX + 1);
+        } else {
+          setScoreO(scoreO + 1);
+        }
       }
-    }
-  }
+    },
+    [gameFinished, xIsNext, history, currentMove, scoreO, scoreX]
+  );
 
-  function jumpTo(move) {
+  const jumpTo = useCallback((move) => {
     setCurrentMove(move);
     setXIsNext(move % 2 === 0);
-    setTimeLeft(10);
+    setTimeLeft(59);
     setGameFinished(false);
-  }
+  }, []);
 
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
-      description = `Go to the move # ${move}`;
+      description = `Go to the move #${move}`;
     } else {
-      description = `Go to start the game`;
+      description = `Go to start of game`;
     }
     return (
       <li key={move} className="bg-gray-700 text-white mb-1 p-1 rounded-sm">
@@ -73,22 +76,22 @@ const Game = () => {
     );
   });
 
-  function handleUndo() {
+  const handleUndo = useCallback(() => {
     if (currentMove > 0) {
       setCurrentMove(currentMove - 1);
       setXIsNext(!xIsNext);
-      setTimeLeft(10);
+      setTimeLeft(59);
       setGameFinished(false);
     }
-  }
+  }, [currentMove, xIsNext]);
 
-  function resetGame() {
+  const resetGame = useCallback(() => {
     setHistory([Array(9).fill(null)]);
     setCurrentMove(0);
     setXIsNext(true);
-    setTimeLeft(10);
+    setTimeLeft(59);
     setGameFinished(false);
-  }
+  }, []);
 
   return (
     <div className="flex flex-col items-center p-4">
