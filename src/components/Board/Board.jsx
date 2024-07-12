@@ -24,7 +24,7 @@ const Board = ({ xIsNext, squares, onPlay, playerX, playerO }) => {
 
   return (
     <>
-      <div>{status}</div>
+      <div className="text-xl font-semibold mb-4">{status}</div>
       <div className="flex">
         {[0, 1, 2].map((i) => (
           <Square

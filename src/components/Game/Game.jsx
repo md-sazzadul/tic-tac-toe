@@ -71,7 +71,9 @@ const Game = () => {
     }
     return (
       <li key={move} className="bg-gray-700 text-white mb-1 p-1 rounded-sm">
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button onClick={() => jumpTo(move)} className="hover:text-yellow-400">
+          {description}
+        </button>
       </li>
     );
   });
@@ -94,24 +96,24 @@ const Game = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="flex flex-col items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-700 min-h-screen text-white">
       <div className="mb-4">
         <input
           type="text"
           value={playerX}
           onChange={(e) => setPlayerX(e.target.value)}
           placeholder="Player X Name"
-          className="mr-2 p-1 border border-gray-400"
+          className="mr-2 p-2 rounded-md border border-gray-400 bg-white text-gray-800"
         />
         <input
           type="text"
           value={playerO}
           onChange={(e) => setPlayerO(e.target.value)}
           placeholder="Player O Name"
-          className="p-1 border border-gray-400"
+          className="p-2 rounded-md border border-gray-400 bg-white text-gray-800"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 text-lg font-bold">
         <div>
           {playerX}: {scoreX}
         </div>
@@ -119,7 +121,7 @@ const Game = () => {
           {playerO}: {scoreO}
         </div>
       </div>
-      <div>Time left: {timeLeft}s</div>
+      <div className="mb-4 text-xl">Time left: {timeLeft}s</div>
       <div className="flex justify-center">
         <div className="mr-16">
           <Board
@@ -129,15 +131,15 @@ const Game = () => {
             playerX={playerX}
             playerO={playerO}
           ></Board>
-          <div className="mt-4">
+          <div className="mt-4 flex justify-center">
             <button
-              className="bg-red-500 text-white py-2 px-4 rounded mr-2"
+              className="bg-red-500 text-white py-2 px-4 rounded mr-2 shadow-md hover:bg-red-700 transition duration-300"
               onClick={resetGame}
             >
               Reset Game
             </button>
             <button
-              className="bg-blue-500 text-white py-2 px-4 rounded"
+              className="bg-blue-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300"
               onClick={handleUndo}
             >
               Undo
@@ -145,7 +147,9 @@ const Game = () => {
           </div>
         </div>
         <div>
-          <ol className="border border-gray-400 p-1 text-lg">{moves}</ol>
+          <ol className="border border-gray-400 p-4 rounded-lg bg-gray-800">
+            {moves}
+          </ol>
         </div>
       </div>
     </div>
