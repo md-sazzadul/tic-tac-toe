@@ -14,11 +14,15 @@ const Board = ({
 }) => {
   const winnerInfo = calculateWinner(squares);
   const winner = winnerInfo ? winnerInfo.winner : null;
+  const isDraw = !winnerInfo && !squares.includes(null);
 
   let status;
 
   if (winner) {
     status = `Winner: ${winner === "X" ? playerX : playerO}`;
+    if (soundEnabled) winSound.play();
+  } else if (isDraw) {
+    status = "It's a draw";
     if (soundEnabled) winSound.play();
   } else {
     status = "Next Player " + (xIsNext ? playerX : playerO);

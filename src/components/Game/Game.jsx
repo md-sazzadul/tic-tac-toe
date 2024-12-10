@@ -146,7 +146,7 @@ const Game = () => {
       >
         {soundEnabled ? "Sound: ON" : "Sound: OFF"}
       </button>
-      <div className="mb-4 text-center sm:flex sm:justify-center">
+      <div className="mb-4 text-center">
         <label
           className="text-white font-bold mr-2 sm:mb-0 mb-2"
           htmlFor="countdown"
@@ -212,14 +212,6 @@ const Game = () => {
             {moves}
           </ol>
         </div>
-      </div>
-      <div className="mt-4 text-xl font-bold">
-        {" "}
-        {winnerInfo
-          ? `Winner: ${winnerInfo.winner === "X" ? playerX : playerO}`
-          : isDraw
-          ? "It's a draw!"
-          : `Next Player: ${xIsNext ? playerX : playerO}`}{" "}
       </div>
       <div className="mt-4 flex justify-center flex-wrap gap-2">
         <button
