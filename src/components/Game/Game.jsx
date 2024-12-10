@@ -10,11 +10,16 @@ const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(59);
+  const [countdownDuration, setCountdownDuration] = useState(59);
+  const [timeLeft, setTimeLeft] = useState(countdownDuration);
   const [gameFinished, setGameFinished] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   const currentSquares = history[currentMove];
+
+  useEffect(() => {
+    setTimeLeft(countdownDuration);
+  }, [countdownDuration]);
 
   useEffect(() => {
     if (timeLeft > 0 && !gameFinished) {
@@ -38,7 +43,7 @@ const Game = () => {
       const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
       setHistory(nextHistory);
       setCurrentMove(nextHistory.length - 1);
-      setTimeLeft(59);
+      setTimeLeft(countdownDuration);
 
       const winnerInfo = calculateWinner(nextSquares);
       if (winnerInfo) {
@@ -52,15 +57,26 @@ const Game = () => {
         setGameFinished(true);
       }
     },
-    [gameFinished, xIsNext, history, currentMove, scoreO, scoreX]
+    [
+      gameFinished,
+      xIsNext,
+      history,
+      currentMove,
+      scoreO,
+      scoreX,
+      countdownDuration,
+    ]
   );
 
-  const jumpTo = useCallback((move) => {
-    setCurrentMove(move);
-    setXIsNext(move % 2 === 0);
-    setTimeLeft(59);
-    setGameFinished(false);
-  }, []);
+  const jumpTo = useCallback(
+    (move) => {
+      setCurrentMove(move);
+      setXIsNext(move % 2 === 0);
+      setTimeLeft(countdownDuration);
+      setGameFinished(false);
+    },
+    [countdownDuration]
+  );
 
   const moves = history.map((squares, move) => {
     let description;
@@ -82,18 +98,18 @@ const Game = () => {
     if (currentMove > 0) {
       setCurrentMove(currentMove - 1);
       setXIsNext(!xIsNext);
-      setTimeLeft(59);
+      setTimeLeft(countdownDuration);
       setGameFinished(false);
     }
-  }, [currentMove, xIsNext]);
+  }, [currentMove, xIsNext, countdownDuration]);
 
   const resetGame = useCallback(() => {
     setHistory([Array(9).fill(null)]);
     setCurrentMove(0);
     setXIsNext(true);
-    setTimeLeft(59);
+    setTimeLeft(countdownDuration);
     setGameFinished(false);
-  }, []);
+  }, [countdownDuration]);
 
   const winnerInfo = calculateWinner(currentSquares);
   const isDraw = !winnerInfo && !currentSquares.includes(null);
@@ -110,6 +126,20 @@ const Game = () => {
       >
         {soundEnabled ? "Sound: ON" : "Sound: OFF"}
       </button>
+      <div className="mb-4">
+        <label className="text-white font-bold mr-2" htmlFor="countdown">
+          Set Countdown (seconds)
+        </label>
+        <input
+          id="countdown"
+          type="number"
+          value={countdownDuration}
+          onChange={(e) =>
+            setCountdownDuration(Math.max(1, Number(e.target.value)))
+          }
+          className="p-2 rounded-md border border-gray-400 bg-white text-gray-800 w-20 text-center"
+        />
+      </div>
       <div className="mb-4 w-full sm:w-auto flex flex-col sm:flex-row justify-center items-center">
         <input
           type="text"
@@ -138,7 +168,7 @@ const Game = () => {
         <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
           <div
             className="bg-blue-600 h-2.5 rounded-full"
-            style={{ width: `${(timeLeft / 59) * 100}%` }}
+            style={{ width: `${(timeLeft / countdownDuration) * 100}%` }}
           ></div>
           <div>Time left: {timeLeft}s</div>
         </div>
