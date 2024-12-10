@@ -97,13 +97,13 @@ const Game = () => {
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-l from-rose-800 to-rose-200 min-h-screen text-white">
-      <div className="mb-4">
+      <div className="mb-4 w-full sm:w-auto flex flex-col sm:flex-row justify-center items-center">
         <input
           type="text"
           value={playerX}
           onChange={(e) => setPlayerX(e.target.value)}
           placeholder="Player X Name"
-          className="mr-2 p-2 rounded-md border border-gray-400 bg-white text-gray-800"
+          className="mr-2 mb-2 sm:mb-0 p-2 rounded-md border border-gray-400 bg-white text-gray-800"
         />
         <input
           type="text"
@@ -122,35 +122,35 @@ const Game = () => {
         </div>
       </div>
       <div className="mb-4 text-xl">Time left: {timeLeft}s</div>
-      <div className="flex justify-center">
-        <div className="mr-16">
+      <div className="flex flex-col lg:flex-row justify-center w-full lg:w-auto">
+        <div className="mb-4 lg:mr-16 flex justify-center">
           <Board
             xIsNext={xIsNext}
             squares={currentSquares}
             onPlay={handlePlay}
             playerX={playerX}
             playerO={playerO}
-          ></Board>
-          <div className="mt-4 flex justify-center">
-            <button
-              className="bg-white-500 text-white py-2 px-4 rounded mr-2 shadow-md hover:bg-red-700 transition duration-300"
-              onClick={resetGame}
-            >
-              Reset Game
-            </button>
-            <button
-              className="bg-purple-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300"
-              onClick={handleUndo}
-            >
-              Undo
-            </button>
-          </div>
+          />
         </div>
-        <div>
-          <ol className="border border-gray-400 p-4 rounded-lg bg-gray-800">
+        <div className="flex justify-center w-full lg:w-auto">
+          <ol className="border border-gray-400 p-4 rounded-lg bg-gray-800 w-full lg:w-auto">
             {moves}
           </ol>
         </div>
+      </div>
+      <div className="mt-4 flex justify-center">
+        <button
+          className="bg-white-500 text-white py-2 px-4 rounded mr-2 shadow-md hover:bg-red-700 transition duration-300"
+          onClick={resetGame}
+        >
+          Reset Game
+        </button>
+        <button
+          className="bg-purple-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300"
+          onClick={handleUndo}
+        >
+          Undo
+        </button>
       </div>
     </div>
   );

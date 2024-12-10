@@ -30,31 +30,11 @@ const Board = ({ xIsNext, squares, onPlay, playerX, playerO }) => {
   return (
     <>
       <div className="text-xl font-semibold mb-4">{status}</div>
-      <div className="flex">
-        {[0, 1, 2].map((i) => (
+      <div className="grid grid-cols-3 gap-2">
+        {squares.map((square, i) => (
           <Square
             key={i}
-            value={squares[i]}
-            onSquareClick={() => handleClick(i)}
-            isWinningSquare={winnerInfo?.line.includes(i)}
-          />
-        ))}
-      </div>
-      <div className="flex">
-        {[3, 4, 5].map((i) => (
-          <Square
-            key={i}
-            value={squares[i]}
-            onSquareClick={() => handleClick(i)}
-            isWinningSquare={winnerInfo?.line.includes(i)}
-          />
-        ))}
-      </div>
-      <div className="flex">
-        {[6, 7, 8].map((i) => (
-          <Square
-            key={i}
-            value={squares[i]}
+            value={square}
             onSquareClick={() => handleClick(i)}
             isWinningSquare={winnerInfo?.line.includes(i)}
           />
