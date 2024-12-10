@@ -121,7 +121,15 @@ const Game = () => {
           {playerO}: {scoreO}
         </div>
       </div>
-      <div className="mb-4 text-xl">Time left: {timeLeft}s</div>
+      <div className="mb-4 text-xl flex flex-col items-center w-full">
+        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+          <div
+            className="bg-blue-600 h-2.5 rounded-full"
+            style={{ width: `${(timeLeft / 59) * 100}%` }}
+          ></div>
+          <div>Time left: {timeLeft}s</div>
+        </div>
+      </div>
       <div className="flex flex-col lg:flex-row justify-center w-full lg:w-auto">
         <div className="mb-4 lg:mr-16 flex justify-center">
           <Board
