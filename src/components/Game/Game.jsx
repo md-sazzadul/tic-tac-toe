@@ -5,16 +5,14 @@ import Board from "../Board/Board";
 const Game = () => {
   const [playerX, setPlayerX] = useState("Player X");
   const [playerO, setPlayerO] = useState("Player O");
-
   const [scoreX, setScoreX] = useState(0);
   const [scoreO, setScoreO] = useState(0);
-
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
-
   const [timeLeft, setTimeLeft] = useState(59);
   const [gameFinished, setGameFinished] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   const currentSquares = history[currentMove];
 
@@ -102,6 +100,16 @@ const Game = () => {
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-l from-rose-800 to-rose-200 min-h-screen text-white">
+      <button
+        className={`mb-4 px-4 py-2 text-lg font-bold rounded-md shadow-md ${
+          soundEnabled
+            ? "bg-green-600 hover:bg-green-800"
+            : "bg-gray-600 hover:bg-gray-800"
+        }`}
+        onClick={() => setSoundEnabled(!soundEnabled)}
+      >
+        {soundEnabled ? "Sound: ON" : "Sound: OFF"}
+      </button>
       <div className="mb-4 w-full sm:w-auto flex flex-col sm:flex-row justify-center items-center">
         <input
           type="text"
@@ -143,6 +151,7 @@ const Game = () => {
             onPlay={handlePlay}
             playerX={playerX}
             playerO={playerO}
+            soundEnabled={soundEnabled}
           />
         </div>
         <div className="flex justify-center w-full lg:w-auto">

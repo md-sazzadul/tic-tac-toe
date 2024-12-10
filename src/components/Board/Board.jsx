@@ -4,7 +4,14 @@ import Square from "../Square/Square";
 const clickSound = new Audio("/public/sounds/click.wav");
 const winSound = new Audio("/public/sounds/win.mp3");
 
-const Board = ({ xIsNext, squares, onPlay, playerX, playerO }) => {
+const Board = ({
+  xIsNext,
+  squares,
+  onPlay,
+  playerX,
+  playerO,
+  soundEnabled,
+}) => {
   const winnerInfo = calculateWinner(squares);
   const winner = winnerInfo ? winnerInfo.winner : null;
 
@@ -12,7 +19,7 @@ const Board = ({ xIsNext, squares, onPlay, playerX, playerO }) => {
 
   if (winner) {
     status = `Winner: ${winner === "X" ? playerX : playerO}`;
-    winSound.play();
+    if (soundEnabled) winSound.play();
   } else {
     status = "Next Player " + (xIsNext ? playerX : playerO);
   }
@@ -21,7 +28,7 @@ const Board = ({ xIsNext, squares, onPlay, playerX, playerO }) => {
     if (squares[i] || winner) {
       return;
     }
-    clickSound.play();
+    if (soundEnabled) clickSound.play();
     const nextSquares = squares.slice();
     xIsNext ? (nextSquares[i] = "X") : (nextSquares[i] = "O");
     onPlay(nextSquares);
