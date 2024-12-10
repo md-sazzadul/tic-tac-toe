@@ -50,6 +50,8 @@ const Game = () => {
         } else {
           setScoreO(scoreO + 1);
         }
+      } else if (!nextSquares.includes(null)) {
+        setGameFinished(true);
       }
     },
     [gameFinished, xIsNext, history, currentMove, scoreO, scoreX]
@@ -94,6 +96,9 @@ const Game = () => {
     setTimeLeft(59);
     setGameFinished(false);
   }, []);
+
+  const winnerInfo = calculateWinner(currentSquares);
+  const isDraw = !winnerInfo && !currentSquares.includes(null);
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-l from-rose-800 to-rose-200 min-h-screen text-white">
@@ -145,6 +150,14 @@ const Game = () => {
             {moves}
           </ol>
         </div>
+      </div>
+      <div className="mt-4 text-xl font-bold">
+        {" "}
+        {winnerInfo
+          ? `Winner: ${winnerInfo.winner === "X" ? playerX : playerO}`
+          : isDraw
+          ? "It's a draw!"
+          : `Next Player: ${xIsNext ? playerX : playerO}`}{" "}
       </div>
       <div className="mt-4 flex justify-center">
         <button
