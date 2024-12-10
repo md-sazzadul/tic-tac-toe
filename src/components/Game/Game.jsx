@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import Confetti from "react-confetti";
 import { calculateWinner } from "../../utils";
 import Board from "../Board/Board";
 
@@ -13,6 +14,7 @@ const Game = () => {
   const [countdownDuration, setCountdownDuration] = useState(59);
   const [timeLeft, setTimeLeft] = useState(countdownDuration);
   const [gameFinished, setGameFinished] = useState(false);
+  const [winner, setWinner] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   const currentSquares = history[currentMove];
@@ -27,13 +29,10 @@ const Game = () => {
       return () => clearTimeout(timerId);
     } else if (timeLeft === 0 && !gameFinished) {
       setGameFinished(true);
-      if (xIsNext) {
-        setScoreO(scoreO + 1);
-      } else {
-        setScoreX(scoreX + 1);
-      }
+      setWinner(xIsNext ? playerO : playerX);
+      xIsNext ? setScoreO(scoreO + 1) : setScoreX(scoreX + 1);
     }
-  }, [timeLeft, xIsNext, gameFinished, scoreO, scoreX]);
+  }, [timeLeft, xIsNext, gameFinished, scoreO, scoreX, playerO, playerX]);
 
   const handlePlay = useCallback(
     (nextSquares) => {
@@ -48,11 +47,10 @@ const Game = () => {
       const winnerInfo = calculateWinner(nextSquares);
       if (winnerInfo) {
         setGameFinished(true);
-        if (winnerInfo.winner === "X") {
-          setScoreX(scoreX + 1);
-        } else {
-          setScoreO(scoreO + 1);
-        }
+        setWinner(winnerInfo.winner === "X" ? playerX : playerO);
+        winnerInfo.winner === "X"
+          ? setScoreX(scoreX + 1)
+          : setScoreO(scoreO + 1);
       } else if (!nextSquares.includes(null)) {
         setGameFinished(true);
       }
@@ -65,6 +63,8 @@ const Game = () => {
       scoreO,
       scoreX,
       countdownDuration,
+      playerO,
+      playerX,
     ]
   );
 
@@ -109,6 +109,7 @@ const Game = () => {
     setXIsNext(true);
     setTimeLeft(countdownDuration);
     setGameFinished(false);
+    setWinner(null);
   }, [countdownDuration]);
 
   const winnerInfo = calculateWinner(currentSquares);
@@ -116,6 +117,25 @@ const Game = () => {
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-l from-rose-800 to-rose-200 min-h-screen text-white">
+      {gameFinished && winner && (
+        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      )}
+
+      {gameFinished && winner && (
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75 z-50">
+          <div className="bg-white text-gray-900 rounded-lg shadow-lg p-6 text-center">
+            <h2 className="text-2xl font-bold mb-4">🎉 {winner} Wins! 🎉</h2>
+            <p className="mb-6">Great job! Want to play another round?</p>
+            <button
+              onClick={resetGame}
+              className="bg-blue-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-800"
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      )}
+
       <button
         className={`mb-4 px-4 py-2 text-lg font-bold rounded-md shadow-md ${
           soundEnabled
