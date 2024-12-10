@@ -126,8 +126,11 @@ const Game = () => {
       >
         {soundEnabled ? "Sound: ON" : "Sound: OFF"}
       </button>
-      <div className="mb-4">
-        <label className="text-white font-bold mr-2" htmlFor="countdown">
+      <div className="mb-4 text-center sm:flex sm:justify-center">
+        <label
+          className="text-white font-bold mr-2 sm:mb-0 mb-2"
+          htmlFor="countdown"
+        >
           Set Countdown (seconds)
         </label>
         <input
@@ -137,7 +140,7 @@ const Game = () => {
           onChange={(e) =>
             setCountdownDuration(Math.max(1, Number(e.target.value)))
           }
-          className="p-2 rounded-md border border-gray-400 bg-white text-gray-800 w-20 text-center"
+          className="p-2 rounded-md border border-gray-400 bg-white text-gray-800 w-24 text-center"
         />
       </div>
       <div className="mb-4 w-full sm:w-auto flex flex-col sm:flex-row justify-center items-center">
@@ -198,15 +201,15 @@ const Game = () => {
           ? "It's a draw!"
           : `Next Player: ${xIsNext ? playerX : playerO}`}{" "}
       </div>
-      <div className="mt-4 flex justify-center">
+      <div className="mt-4 flex justify-center flex-wrap gap-2">
         <button
-          className="bg-white-500 text-white py-2 px-4 rounded mr-2 shadow-md hover:bg-red-700 transition duration-300"
+          className="bg-white-500 text-white py-2 px-4 rounded shadow-md hover:bg-red-700 transition duration-300 text-sm sm:text-base"
           onClick={resetGame}
         >
           Reset Game
         </button>
         <button
-          className="bg-purple-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300"
+          className="bg-purple-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300 text-sm sm:text-base"
           onClick={handleUndo}
         >
           Undo

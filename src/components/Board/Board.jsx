@@ -35,8 +35,10 @@ const Board = ({
   }
 
   return (
-    <>
-      <div className="text-xl font-semibold mb-4">{status}</div>
+    <div className="w-full max-w-xs sm:max-w-md">
+      <div className="text-lg sm:text-xl font-semibold mb-4 text-center">
+        {status}
+      </div>
       <div className="grid grid-cols-3 gap-2">
         {squares.map((square, i) => (
           <Square
@@ -47,7 +49,7 @@ const Board = ({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
