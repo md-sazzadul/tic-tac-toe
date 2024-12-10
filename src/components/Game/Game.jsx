@@ -96,7 +96,7 @@ const Game = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-700 min-h-screen text-white">
+    <div className="flex flex-col items-center p-4 bg-gradient-to-l from-rose-800 to-rose-200 min-h-screen text-white">
       <div className="mb-4">
         <input
           type="text"
@@ -133,13 +133,13 @@ const Game = () => {
           ></Board>
           <div className="mt-4 flex justify-center">
             <button
-              className="bg-red-500 text-white py-2 px-4 rounded mr-2 shadow-md hover:bg-red-700 transition duration-300"
+              className="bg-white-500 text-white py-2 px-4 rounded mr-2 shadow-md hover:bg-red-700 transition duration-300"
               onClick={resetGame}
             >
               Reset Game
             </button>
             <button
-              className="bg-blue-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300"
+              className="bg-purple-500 text-white py-2 px-4 rounded shadow-md hover:bg-blue-700 transition duration-300"
               onClick={handleUndo}
             >
               Undo
