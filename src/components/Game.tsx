@@ -19,8 +19,23 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+  function getMoveCoordinates(
+    prevSquares: (string | null)[],
+    nextSquares: (string | null)[]
+  ) {
+    for (let i = 0; i < prevSquares.length; i++) {
+      if (prevSquares[i] !== nextSquares[i]) {
+        return [Math.floor(i / 3) + 1, (i % 3) + 1];
+      }
+    }
+    return [null, null];
+  }
+
   const moves = history.map((squares, move) => {
     const description = move > 0 ? `Go to move #${move}` : "Go to game start";
+
+    const [row, col] =
+      move > 0 ? getMoveCoordinates(history[move - 1], squares) : [null, null];
 
     return (
       <li key={move}>
@@ -32,7 +47,7 @@ export default function Game() {
           }`}
           onClick={() => jumpTo(move)}
         >
-          {description}
+          {description} {row && col ? `(Row: ${row}, Col: ${col})` : ""}
         </button>
       </li>
     );
