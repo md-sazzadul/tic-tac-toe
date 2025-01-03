@@ -45,6 +45,15 @@ export default function Game() {
         <h3 className="text-lg font-semibold mb-2">Game History</h3>
         <ol className="list-decimal list-inside space-y-2">{moves}</ol>
       </div>
+      <button
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        onClick={() => {
+          setHistory([Array(9).fill(null)]);
+          setCurrentMove(0);
+        }}
+      >
+        Restart Game
+      </button>
     </div>
   );
 }
