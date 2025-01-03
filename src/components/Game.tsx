@@ -27,8 +27,8 @@ export default function Game() {
         <button
           className={`${
             move === currentMove
-              ? "font-bold underline"
-              : "text-blue-500 hover:underline"
+              ? "font-bold underline dark:text-gray-100"
+              : "text-blue-500 dark:text-blue-300 hover:underline"
           }`}
           onClick={() => jumpTo(move)}
         >
@@ -43,8 +43,10 @@ export default function Game() {
       <div>
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="mt-6 p-4 border rounded bg-gray-100">
-        <h3 className="text-lg font-semibold mb-2">Game History</h3>
+      <div className="mt-6 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+        <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
+          Game History
+        </h3>
         <ol className="list-decimal list-inside space-y-2">{moves}</ol>
       </div>
       <button

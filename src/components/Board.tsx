@@ -26,7 +26,9 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
   return (
     <div>
-      <div className="text-center text-lg font-semibold mb-4">{status}</div>
+      <div className="text-center text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
+        {status}
+      </div>
       <div className="grid grid-cols-3 gap-2 w-48 mx-auto mt-10">
         {squares.map((value, index) => (
           <Square
