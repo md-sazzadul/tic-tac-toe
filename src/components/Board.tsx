@@ -1,9 +1,15 @@
 import { calculateWinner } from "../utils/calculateWinner";
 import Square from "./Square";
 
-export default function Board({ xIsNext, squares, onPlay }) {
+interface BoardProps {
+  xIsNext: boolean;
+  squares: (string | null)[];
+  onPlay: (nextSquares: (string | null)[]) => void;
+}
+
+export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
   function handleClick(i: number) {
-    if (squares[i] || winner) {
+    if (squares[i] || calculateWinner(squares)[0]) {
       return; // Square already occupied, do nothing
     }
 
