@@ -58,9 +58,9 @@ export default function Game() {
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
       {!isNameSet ? (
-        <div className="flex flex-col items-center space-y-4 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex flex-col items-center space-y-4 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700 w-full max-w-xs sm:max-w-sm md:max-w-md">
           <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
             Enter Player Names
           </h3>
@@ -69,18 +69,18 @@ export default function Game() {
             placeholder="Player X Name"
             value={playerX}
             onChange={(e) => setPlayerX(e.target.value)}
-            className="p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           <input
             type="text"
             placeholder="Player O Name"
             value={playerO}
             onChange={(e) => setPlayerO(e.target.value)}
-            className="p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           <button
             onClick={() => setIsNameSet(true)}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Start Game
           </button>
@@ -96,7 +96,7 @@ export default function Game() {
               playerO={playerO}
             />
           </div>
-          <div className="mt-6 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+          <div className="mt-6 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700 w-full max-w-xs sm:max-w-sm md:max-w-md">
             <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
               Game History
             </h3>

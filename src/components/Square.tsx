@@ -25,7 +25,7 @@ export default function Square({
 
   return (
     <button
-      className={`w-16 h-16 text-white text-2xl font-bold rounded shadow-md transition-all focus:outline-none focus:ring-2 ${
+      className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white text-xl sm:text-2xl md:text-3xl font-bold rounded shadow-md transition-all focus:outline-none focus:ring-2 ${
         isWinningSquare
           ? "animate-pulse bg-green-500 dark:bg-green-700"
           : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800"

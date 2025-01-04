@@ -47,9 +47,9 @@ export default function Board({
     : `Next Player: ${xIsNext ? playerX : playerO}`;
 
   return (
-    <div>
+    <div className="flex flex-col items-center space-y-4">
       <div
-        className={`text-center text-lg font-semibold mb-4 ${
+        className={`text-center text-lg font-semibold ${
           winner
             ? "text-green-600 dark:text-green-400 animate-bounce"
             : "text-gray-800 dark:text-gray-200"
@@ -57,7 +57,7 @@ export default function Board({
       >
         {status}
       </div>
-      <div className="grid grid-cols-3 gap-2 w-48 mx-auto mt-10">
+      <div className="grid grid-cols-3 gap-2 w-40 sm:w-48 md:w-64 mx-auto mt-10">
         {squares.map((value, index) => (
           <Square
             key={index}
