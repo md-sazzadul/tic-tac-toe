@@ -6,6 +6,10 @@ export default function Game() {
     Array(9).fill(null),
   ]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [playerX, setPlayerX] = useState("Player X");
+  const [playerO, setPlayerO] = useState("Player O");
+  const [isNameSet, setIsNameSet] = useState(false);
+
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -55,24 +59,61 @@ export default function Game() {
 
   return (
     <div className="flex flex-col items-center">
-      <div>
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-      </div>
-      <div className="mt-6 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
-        <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
-          Game History
-        </h3>
-        <ol className="list-decimal list-inside space-y-2">{moves}</ol>
-      </div>
-      <button
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={() => {
-          setHistory([Array(9).fill(null)]);
-          setCurrentMove(0);
-        }}
-      >
-        Restart Game
-      </button>
+      {!isNameSet ? (
+        <div className="flex flex-col items-center space-y-4 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+          <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
+            Enter Player Names
+          </h3>
+          <input
+            type="text"
+            placeholder="Player X Name"
+            value={playerX}
+            onChange={(e) => setPlayerX(e.target.value)}
+            className="p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          />
+          <input
+            type="text"
+            placeholder="Player O Name"
+            value={playerO}
+            onChange={(e) => setPlayerO(e.target.value)}
+            className="p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          />
+          <button
+            onClick={() => setIsNameSet(true)}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Start Game
+          </button>
+        </div>
+      ) : (
+        <>
+          <div>
+            <Board
+              xIsNext={xIsNext}
+              squares={currentSquares}
+              onPlay={handlePlay}
+              playerX={playerX}
+              playerO={playerO}
+            />
+          </div>
+          <div className="mt-6 p-4 border rounded bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
+              Game History
+            </h3>
+            <ol className="list-decimal list-inside space-y-2">{moves}</ol>
+          </div>
+          <button
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            onClick={() => {
+              setHistory([Array(9).fill(null)]);
+              setCurrentMove(0);
+              setIsNameSet(false);
+            }}
+          >
+            Restart Game
+          </button>
+        </>
+      )}
     </div>
   );
 }

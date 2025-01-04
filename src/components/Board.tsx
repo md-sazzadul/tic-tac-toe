@@ -5,9 +5,17 @@ interface BoardProps {
   xIsNext: boolean;
   squares: (string | null)[];
   onPlay: (nextSquares: (string | null)[]) => void;
+  playerX: string;
+  playerO: string;
 }
 
-export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
+export default function Board({
+  xIsNext,
+  squares,
+  onPlay,
+  playerX,
+  playerO,
+}: BoardProps) {
   function handleClick(i: number) {
     if (squares[i] || calculateWinner(squares)[0]) {
       return; // Square already occupied, do nothing
@@ -24,10 +32,10 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
   const isDraw = !winner && squares.every((square) => square !== null);
 
   const status = winner
-    ? `Winner: ${winner}!`
+    ? `Winner: ${winner === "X" ? playerX : playerO}!`
     : isDraw
     ? "Game is a Draw!"
-    : `Next Player: ${xIsNext ? "X" : "O"}`;
+    : `Next Player: ${xIsNext ? playerX : playerO}`;
 
   return (
     <div>
