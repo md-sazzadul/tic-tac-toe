@@ -1,4 +1,5 @@
 import { useState } from "react";
+import WinSound from "../assets/click-sound.mp3";
 
 interface SquareProps {
   value: string | null;
@@ -16,6 +17,8 @@ export default function Square({
   function handleClick() {
     if (!value) {
       setClicked(true);
+      const audio = new Audio(WinSound);
+      audio.play();
       onSquareClick();
     }
   }

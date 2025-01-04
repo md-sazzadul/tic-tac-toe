@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import WinSound from "../assets/win-sound.mp3";
 import { calculateWinner } from "../utils/calculateWinner";
 import Square from "./Square";
 
@@ -16,8 +18,17 @@ export default function Board({
   playerX,
   playerO,
 }: BoardProps) {
+  const [winner, winningLine] = calculateWinner(squares);
+
+  useEffect(() => {
+    if (winner) {
+      const winAudio = new Audio(WinSound);
+      winAudio.play();
+    }
+  }, [winner]);
+
   function handleClick(i: number) {
-    if (squares[i] || calculateWinner(squares)[0]) {
+    if (squares[i] || winner) {
       return; // Square already occupied, do nothing
     }
 
@@ -26,8 +37,6 @@ export default function Board({
 
     onPlay(nextSquares);
   }
-
-  const [winner, winningLine] = calculateWinner(squares);
 
   const isDraw = !winner && squares.every((square) => square !== null);
 
