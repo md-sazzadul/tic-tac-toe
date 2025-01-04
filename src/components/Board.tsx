@@ -24,7 +24,7 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
   const isDraw = !winner && squares.every((square) => square !== null);
 
   const status = winner
-    ? `Winner: ${winner}`
+    ? `Winner: ${winner}!`
     : isDraw
     ? "Game is a Draw!"
     : `Next Player: ${xIsNext ? "X" : "O"}`;
@@ -34,7 +34,7 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
       <div
         className={`text-center text-lg font-semibold mb-4 ${
           winner
-            ? "text-green-600 dark:text-green-400"
+            ? "text-green-600 dark:text-green-400 animate-bounce"
             : "text-gray-800 dark:text-gray-200"
         }`}
       >

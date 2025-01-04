@@ -25,9 +25,9 @@ function App() {
       <div className="absolute top-4 right-4">
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="p-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition-all"
+          className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all"
         >
-          {darkMode ? "Light Mode" : "Dark Mode"}
+          {darkMode ? "☀️" : "🌙"}
         </button>
       </div>
       <Game />

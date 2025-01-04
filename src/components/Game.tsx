@@ -40,9 +40,9 @@ export default function Game() {
     return (
       <li key={move}>
         <button
-          className={`${
+          className={`p-2 rounded ${
             move === currentMove
-              ? "font-bold underline dark:text-gray-100"
+              ? "bg-blue-200 dark:bg-blue-600 font-bold"
               : "text-blue-500 dark:text-blue-300 hover:underline"
           }`}
           onClick={() => jumpTo(move)}
